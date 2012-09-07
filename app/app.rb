@@ -1,3 +1,4 @@
+require 'api/control'
 module Play
   class App < Sinatra::Base
     enable :sessions
@@ -22,10 +23,11 @@ module Play
     #   :templates => "#{dir}/templates",
     #   :views => "#{dir}/views"
     # }
-
+    before do
+      content_type :json
+    end
 
     get "/" do
-      content_type :html
       # mustache :index
     end
 

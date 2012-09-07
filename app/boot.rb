@@ -11,5 +11,7 @@ require "logger"
 require "json"
 
 require "models/player"
+require "models/song"
+require "decorators/song_decorator"
 
 require "app"

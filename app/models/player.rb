@@ -9,17 +9,26 @@ class Player
 
   # Currently playing song
   def self.now_playing
-    app.current_song
+    Song.new(app.current_song)
+  # rescue
+  #   nil
+  end
+
+  # Check if player is playing
+  def self.playing?
+    app.playing?
   end
 
   # Skip to next track
   def self.play_next
     app.next
+    now_playing
   end
 
   # Jump to previous track
   def self.play_previous
     app.previous
+    now_playing
   end
 
   # Play playlist
@@ -38,7 +47,7 @@ class Player
   end
 
   # Check if paused
-  def paused?
+  def self.paused?
     app.paused?
   end
 end
