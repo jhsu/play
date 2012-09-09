@@ -20,6 +20,5 @@ $(document).ready ->
     url: '/queue',
     dataType: 'json',
     success: (response) ->
-      console.log(response)
       songsView = new Play.Views.SongListView(response.songs)
       songsView.render()
