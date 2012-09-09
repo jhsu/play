@@ -1,3 +1,7 @@
 .bundle
 config/mpd.conf
 config/icecast.xml
+log/*.log
+db
+*.sql
+tmp/*
