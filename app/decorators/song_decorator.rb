@@ -10,10 +10,12 @@ class SongDecorator
   def as_json(options={})
     {
       :id => model.id,
-      :post => model.pos,
+      :name => model.name,
       :artist => model.artist,
-      :album => model.album,
-      :name => model.name
+      :album => model.album
+      # :queued => model.queued?,
+      # :last_played => last_played
+      # :duration => model.duration
     }
   end
 
@@ -23,5 +25,12 @@ class SongDecorator
 
   def method_missing(meth, *args, &block)
     @model.send(meth, *args, &block)
+  end
+
+  protected
+
+  def last_played
+    last = @model.last_played
+    last ? last.iso8601 : ""
   end
 end

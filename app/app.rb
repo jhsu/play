@@ -1,8 +1,12 @@
 require 'api/control'
+
 module Play
   class App < Sinatra::Base
     enable :sessions
     # set    :session_secret, Play.config.auth_token
+
+    register Mustache::Sinatra
+    # register Sinatra::Auth::Github
 
     dir = File.dirname(File.expand_path(__FILE__))
 
@@ -18,23 +22,49 @@ module Play
 
     set :public_folder, "#{dir}/frontend/public"
     set :static, true
-    # set :mustache, {
-    #   :namespace => Play,
-    #   :templates => "#{dir}/templates",
-    #   :views => "#{dir}/views"
-    # }
+    set :mustache, {
+      :namespace => Play,
+      :templates => "#{dir}/templates",
+      :views => "#{dir}/views"
+    }
     before do
+      return if ENV['RACK_ENV'] == 'test'
+
       content_type :json
+
+      session_not_required = request.path_info =~ /\/login/ ||
+                             request.path_info =~ /\/auth/ ||
+                             request.path_info =~ /\/images\/art\/.*.png/
+
+      # if session_not_required || @current_user
+        true
+      # else
+      #   login
+      # end
+    end
+
+    def api_request
+      !!params[:token] || !!request.env["HTTP_AUTHORIZATION"]
+    end
+
+    def login
+      # halt 401 if !user
+
+      # @current_user = session[:user] = user
+    end
+
+    def current_user
+      @current_user
     end
 
     get "/" do
-      # mustache :index
+      content_type :html
+      mustache :index
     end
 
     # get "/logout" do
     #   content_type :html
     #   logout!
-    #   redirect 'https://github.com'
     # end
 
     # get "/token" do
