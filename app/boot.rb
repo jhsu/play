@@ -15,6 +15,7 @@ require "play"
 
 require "models/player"
 require "models/song"
+require "models/queue"
 require "decorators/song_decorator"
 
 require "app"
