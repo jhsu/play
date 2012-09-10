@@ -1,6 +1,7 @@
 .bundle
 config/mpd.conf
 config/icecast.xml
+config/play.yml
 log/*.log
 db
 *.sql
