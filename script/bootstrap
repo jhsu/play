@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -e
+
+
+#
+# Check for Bundler
+#
+if test ! $(which bundle)
+then
+  echo "  x You need to install Bundler:"
+  echo "    gem install bundler"
+  exit
+else
+  echo "  + Bundler found."
+fi
+
+#
+# Install gems
+#
+echo "  + Bootstrapping your Rubies."
+# bundle install --binstubs --local --path vendor/gems --quiet
+bundle install --quiet
+
+#
+# Check for Icecast
+#
+if test ! $(which icecast)
+then
+  echo "  x You need to install icecast:"
+  echo "    brew install icecast"
+  exit
+else
+  echo "  + Icecast found."
+fi
+
+#
+# Check for MPD
+#
+if test ! $(which mpd)
+then
+  echo "  x You need to install mpd:"
+  echo "    brew install mpd"
+  exit
+else
+  echo "  + MPD found."
+fi
