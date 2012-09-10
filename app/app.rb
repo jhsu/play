@@ -1,5 +1,6 @@
 require 'api/control'
 require 'api/queue'
+require 'api/system'
 
 module Play
   class App < Sinatra::Base
@@ -37,8 +38,9 @@ module Play
                              request.path_info =~ /\/auth/ ||
                              request.path_info =~ /\/images\/art\/.*.png/
 
+
       # if session_not_required || @current_user
-        true
+        session_not_required || true
       # else
       #   login
       # end

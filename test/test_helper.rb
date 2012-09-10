@@ -9,6 +9,13 @@ rescue LoadError
 end
 
 require 'rack/test'
+class MiniTest::Unit::TestCase
+  include Rack::Test::Methods
+
+  def app
+    @app ||= Play::App.new
+  end
+end
 
 ENV['RACK_ENV'] = 'test'
 
