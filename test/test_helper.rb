@@ -15,6 +15,11 @@ class MiniTest::Unit::TestCase
   def app
     @app ||= Play::App.new
   end
+
+  def json_request(meth, *args)
+    send(meth, *args)
+    JSON.parse(last_response.body)
+  end
 end
 
 ENV['RACK_ENV'] = 'test'
