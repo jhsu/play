@@ -52,13 +52,17 @@ module Play
       app.paused?
     end
 
-
+    # Search songs by artist name, song name or album name
+    #
+    # @param [String] keyword to search by
     def self.search(keyword)
-      matches = []
-      # artists
-      # albums
-      # songs_by_artist(artist)
-      matches += app.songs.select {|song| Song.new(song).name =~ /#{keyword}/i }
+      songs = []
+      songs += app.songs.map {|s| Song.new(s) }
+      songs.select {|song|
+        song.name =~ /#{keyword}/i ||
+        song.artist =~ /#{keyword}/i ||
+        song.album =~ /#{keyword}/i
+      }
     end
 
   end
