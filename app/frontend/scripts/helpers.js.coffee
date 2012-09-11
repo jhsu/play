@@ -15,6 +15,15 @@ window.renderNowPlaying = ->
         songView = new Play.Views.SongView(response)
         songView.render()
 
+window.renderControls = ->
+  $.ajax
+    url: '/now_playing',
+    dataType: 'json',
+    success: (response) ->
+      if response
+        controlsView = new Play.Views.ControlsView({playing: !!response.id})
+        controlsView.render()
+
 window.updateSongs = (path, method) ->
   $.ajax
     type: method,

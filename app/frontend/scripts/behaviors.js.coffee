@@ -45,3 +45,19 @@ $(document).ready () ->
         # [TODO]: maybe just handle this clientside
         renderQueue()
     false
+
+  $(document).on 'click', '#pause', () ->
+    $.ajax
+      url: '/pause'
+      type: 'PUT'
+      success: (response) ->
+        renderControls()
+    false
+
+  $(document).on 'click', '#play', () ->
+    $.ajax
+      url: '/play'
+      type: 'PUT'
+      success: (response) ->
+        renderControls()
+    false

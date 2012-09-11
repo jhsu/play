@@ -23,3 +23,12 @@ class Play.Views.SongListView
   render: ->
     rendered = Mustache.to_html(Play.Templates[this.template], this, Play.Templates)
     $(this.el).html(rendered)
+
+class Play.Views.ControlsView
+  el: "#controls"
+  template: "controls"
+  constructor: (@player) ->
+
+  render: ->
+    rendered = Mustache.to_html(Play.Templates[this.template], @player, Play.Templates)
+    $(this.el).html(rendered)

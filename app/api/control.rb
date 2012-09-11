@@ -6,8 +6,12 @@ module Play
         song = SongDecorator.new(Player.now_playing)
         song.to_json
       else
-        nil
+        "{}"
       end
+    end
+
+    post '/pause' do
+      params.inspect
     end
 
     put "/play" do

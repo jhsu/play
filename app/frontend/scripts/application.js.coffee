@@ -10,7 +10,6 @@
 
 
 $(document).ready ->
-
   renderNowPlaying()
-
+  renderControls()
   renderQueue()

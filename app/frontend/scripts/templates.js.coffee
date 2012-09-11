@@ -1,5 +1,15 @@
 Play.Templates = {}
 
+Play.Templates.controls = """
+  {{#playing}}
+  <a href="/pause" id="pause">Pause</a>
+  {{/playing}}
+
+  {{^playing}}
+  <a href="/play" id="play">Play</a>
+  {{/playing}}
+"""
+
 Play.Templates.now_playing = """
   <div class="song">
     <ul class="song-info">
