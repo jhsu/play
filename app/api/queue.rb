@@ -6,17 +6,32 @@ module Play
     end
 
     post "/queue" do
-      if params[:id] && song = Queue.songs.detect {|s| s.id == params[:id].to_s  }
-        Queue.add_song(song)
+      if params[:path] && song = Song.new("file" => params[:path])
+        if Queue.add_song(song)
+          status 200
+        else
+          status 404
+        end
+        "{}"
+      else
+        status 400
+        {:error => params.inspect}.to_json
       end
-      "{}"
     end
 
     delete "/queue" do
-      if params[:id] && song = Queue.songs.detect {|s| s.id == params[:id].to_s  }
-        Queue.remove_song(song)
+      if params[:id] && song = Song.new("id" => params[:id])
+        if Queue.remove_song(song)
+          status 200
+        else
+          status 404
+        end
+        "{}"
+      else
+        status 400
+        {:error => params.inspect}.to_json
       end
-      "{}"
     end
+
   end
 end

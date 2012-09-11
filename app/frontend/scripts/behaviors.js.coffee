@@ -19,14 +19,14 @@ $(document).ready () ->
   #                persistent ID of the song.
   $(document).on 'click', '.add-to-queue', () ->
     element = $(@)
-    id = element.data('song-id')
+    path = element.data('song-path')
     $.ajax
       url: '/queue',
       type: 'POST',
       data:
-        id: id
+        path: path
       success: (response) ->
-        # element.replaceWith(queue(id, true))
+        # [TODO]: notify user that song has been added
     false
 
   # Removes this song from the queue.
@@ -42,5 +42,6 @@ $(document).ready () ->
       data:
         id: id
       success: (response) ->
+        # [TODO]: maybe just handle this clientside
         renderQueue()
     false

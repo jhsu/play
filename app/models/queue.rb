@@ -10,21 +10,32 @@ module Play
 
     # Add a song to the playlist.
     #
-    # @param [Song] song instance
+    # @param [Song#path] song instance
     # @return [true, false] Boolean whether song was added
     def self.add_song(song)
-      Player.app.add(song.path)
-      true
+      add_song_by_path(song.path)
+    end
+
+    # Add song basd on file path. Ensure that it is a file and not a directory.
+    #
+    # @param [String] path to the song
+    # @return [true, false] Boolean whether song was added
+    def self.add_song_by_path(path)
+      if path =~ /\.\w{2,3}/
+        !!Player.app.add(path)
+      else
+        false
+      end
     rescue RuntimeError
       false
     end
 
     # Remove a song to the playlist.
     #
-    # @param [Song] song instance
+    # @param [Song#id] song instance
     # @return [true, false] Boolean whether song was removed
     def self.remove_song(song)
-      Player.app.delete(song.pos)
+      Player.app.delete(song.id)
       true
     rescue RuntimeError
       false

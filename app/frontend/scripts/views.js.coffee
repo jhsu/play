@@ -8,7 +8,7 @@ class Play.Views.SongView
     @artist  = json['artist']
     @album   = json['album']
     # @starred = json['starred']
-    # @queued  = json['queued']
+    @queued  = json['queued']
 
   render: ->
     rendered = Mustache.to_html(Play.Templates[this.template], this, Play.Templates)
