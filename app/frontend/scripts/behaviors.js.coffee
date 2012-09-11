@@ -1,4 +1,11 @@
 $(document).ready () ->
+  $('#queue-results header a').click () ->
+    clearSearch()
+
+  # Refreshes the Queue.
+  $('.queue').click () ->
+    renderQueue()
+    false
 
   # Searches things.
   $('#search').submit () ->
@@ -35,5 +42,5 @@ $(document).ready () ->
       data:
         id: id
       success: (response) ->
-        # element.replaceWith(queue(id, false))
+        renderQueue()
     false
