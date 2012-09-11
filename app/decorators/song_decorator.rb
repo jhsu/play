@@ -13,7 +13,8 @@ class SongDecorator
       :name => model.name,
       :artist => model.artist,
       :album => model.album,
-      :queued => model.queued?
+      :queued => model.queued?,
+      :pos => model.pos
       # :last_played => last_played
       # :duration => model.duration
     }
