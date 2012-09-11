@@ -11,10 +11,15 @@ Play.Templates.now_playing = """
 
 Play.Templates.song = """
   <div class="song">
-    <ul class="song-info">
+    <ul class="song-info" data-song-id="{{id}}">
       <li>{{artist}}</li>
       <li>{{name}}</li>
     </ul>
+
+    <ul class="song-actions">
+      <li>{{>queueing}}</li>
+    </ul>
+
   </div>
 """
 
@@ -24,4 +29,14 @@ Play.Templates.song_list = """
       {{>song}}
     {{/songs}}
   </div>
+"""
+
+Play.Templates.queueing = """
+  {{#queued}}
+    <a href="/queue/remove" class="remove-from-queue" data-song-id="{{id}}">remove from queue</a>
+  {{/queued}}
+
+  {{^queued}}
+    <a href="/queue/add" class="add-to-queue" data-song-id="{{id}}">add to queue</a>
+  {{/queued}}
 """

@@ -4,7 +4,7 @@ class Play.Views.SongView
 
   constructor: (json) ->
     @id      = json['id']
-    @name    = json['name']
+    @name    = json['name'] || json['title']
     @artist  = json['artist']
     @album   = json['album']
     # @starred = json['starred']

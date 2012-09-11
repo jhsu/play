@@ -6,6 +6,8 @@
 //= require templates
 //= require helpers
 
+//= require behaviors
+
 
 $(document).ready ->
   $.ajax
@@ -22,3 +24,11 @@ $(document).ready ->
     success: (response) ->
       songsView = new Play.Views.SongListView(response.songs)
       songsView.render()
+
+  window.updateSongs = (path, method) ->
+    $.ajax
+      type: method,
+      url: path,
+      success: (response) ->
+        songsView = new Play.Views.SongListView(response.songs)
+        songsView.render()

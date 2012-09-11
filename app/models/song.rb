@@ -1,7 +1,7 @@
 module Play
   class Song
     attr_accessor :id, :pos
-    attr_accessor :artist, :album, :name
+    attr_accessor :artist, :album, :name, :path
     # Take MPD song from librmpd and wrap
     # @param [MPD::Song] song
     def initialize(mpd_song)
@@ -11,6 +11,11 @@ module Play
 
       @id = mpd_song['id']
       @pos = mpd_song['pos']
+      @path = mpd_song['file']
+    end
+
+    def queued?
+      !!id
     end
 
     private

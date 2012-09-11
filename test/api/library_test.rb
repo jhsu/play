@@ -12,7 +12,7 @@ describe "api/library" do
     Play::Player.stub :search, [@song] do
       keyword = "justin bieber"
       response = json_request :get, "/search", {"q" => keyword}, {"Accepts" => "application/json"}
-      response.first["name"].must_equal @song.name
+      response["songs"].first["name"].must_equal @song.name
     end
   end
 
