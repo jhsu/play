@@ -9,9 +9,9 @@ module Play
 
     # Currently playing song
     def self.now_playing
-      Play::Song.new(app.current_song)
-    # rescue
-    #   nil
+      if song = app.current_song
+        Play::Song.new(song)
+      end
     end
 
     # Check if player is playing

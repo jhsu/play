@@ -6,16 +6,23 @@ require File.join(File.dirname(__FILE__), '../app/boot')
 # ensure repeat all is off
 Play::Player.app.repeat = false if Play::Player.app.repeat?
 
+# # Checks
+# [TODO]: push changes to clients
 loop do
   songs = Play::Queue.songs
   current_song = Play::Player.now_playing
+
+  # ensure always atleast 1 song queued
   unless current_song.pos == "0"
     current_song.pos.to_i.times do
       Play::Queue.remove_song_by_pos(0)
     end
   end
-  # # Checks
-  # ensure always atleast 1 song queued
+
   # ensure already played songs are cleared
+  if current_song.pos == Play::Queue.songs.last.pos
+    Play::Queue.add_song(Play::Song.new(Play::Player.app.songs.sample))
+  end
+
   sleep 5
 end
