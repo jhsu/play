@@ -6,3 +6,5 @@ log/*.log
 db
 *.sql
 tmp/*
+doc
+.yardoc
