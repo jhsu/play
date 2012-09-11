@@ -2,8 +2,7 @@ module Play
   class Player
     # Connect to mpd server
     def self.app
-      # [TODO]: read connection info from config
-      @app ||= MPD.new('localhost', 6600)
+      @app ||= MPD.new(Play.config.mpd_host || 'localhost', Play.config.mpd_port || 6600)
       @app.connect unless @app.connected?
       @app
     end

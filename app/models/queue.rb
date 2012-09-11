@@ -30,12 +30,23 @@ module Play
       false
     end
 
-    # Remove a song to the playlist.
+    # Remove a song from the playlist.
     #
     # @param [Song#id] song instance
     # @return [true, false] Boolean whether song was removed
     def self.remove_song(song)
-      Player.app.delete(song.id)
+      Player.app.deleteid(song.id)
+      true
+    rescue RuntimeError
+      false
+    end
+
+    # Remove a song from the playlist by position.
+    #
+    # @param [Object#to_s] song instance
+    # @return [true, false] Boolean whether song was removed
+    def self.remove_song_by_pos(pos)
+      Player.app.delete(pos.to_s)
       true
     rescue RuntimeError
       false
