@@ -7,7 +7,7 @@
 //= require helpers
 
 //= require behaviors
-
+//= require upload
 
 $(document).ready ->
   renderNowPlaying()

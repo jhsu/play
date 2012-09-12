@@ -3,15 +3,19 @@ class Play.Views.SongView
   template: "song"
 
   constructor: (json) ->
-    @id      = json['id']
-    @name    = json['name'] || json['title']
-    @artist  = json['artist']
-    @album   = json['album']
-    # @starred = json['starred']
-    @queued  = json['queued']
+    if json
+      @id      = json['id']
+      @name    = json['name'] || json['title']
+      @artist  = json['artist']
+      @album   = json['album']
+      # @starred = json['starred']
+      @queued  = json['queued']
 
   render: ->
-    rendered = Mustache.to_html(Play.Templates[this.template], this, Play.Templates)
+    rendered = if this.id
+      Mustache.to_html(Play.Templates[this.template], this, Play.Templates)
+    else
+      ""
     $(this.el).html(rendered)
 
 

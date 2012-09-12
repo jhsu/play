@@ -64,12 +64,15 @@ module Play
       }
     end
 
+    # Grab music directory from config/mpd.conf, probably should do this
+    # a better way.
     def self.music_directory
       return @music_directory if @music_directory
       @music_directory ||= File.read(
         File.expand_path(File.join(File.dirname(__FILE__), "../../config/mpd.conf"))
       ).match(/^music_directory\s+(.*)$/)[1].gsub(/(^"|')|("|'$)/, '')
       @music_directory += "/" unless @music_directory =~ /\/$/
+      @music_directory = File.expand_path(@music_directory).gsub('\\', '')
     end
 
     def self.update

@@ -22,7 +22,7 @@ module Play
     # @return [true, false] Boolean whether song was added
     def self.add_song_by_path(path)
       if path =~ /\.\w{2,3}/
-        !!Player.app.add(path)
+        !!Player.app.add(Shellwords.escape(path))
       else
         false
       end

@@ -14,7 +14,8 @@ module Play
         tmpfile = file[:tempfile]
         name    = file[:filename].chomp.delete("\000")
         file_with_name = File.join(Play::Player.music_directory, name)
-        system "mv", tmpfile.path, file_with_name
+        FileUtils.mv(tmpfile.path, file_with_name)
+        FileUtils.chmod(0644, file_with_name)
         Play::Player.update
       end
       "{}"

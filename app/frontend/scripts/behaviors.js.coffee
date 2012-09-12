@@ -52,6 +52,7 @@ $(document).ready () ->
       type: 'PUT'
       success: (response) ->
         renderControls()
+        renderNowPlaying()
     false
 
   $(document).on 'click', '#play', () ->
@@ -60,4 +61,5 @@ $(document).ready () ->
       type: 'PUT'
       success: (response) ->
         renderControls()
+        renderNowPlaying()
     false

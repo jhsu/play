@@ -1,3 +1,6 @@
+require 'shellwords'
+require 'fileutils'
+
 require 'api/control'
 require 'api/library'
 require 'api/queue'

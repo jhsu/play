@@ -13,7 +13,8 @@
 
 <body>
 
-  <input id="fileupload" type="file" name="files[]" multiple style="display: none">
+
+  <input id="fileupload" type="file" name="files[]" data-url="/upload" style="display: none" multiple>
 
   <section id="top-bar">
     <header class="row">
@@ -45,6 +46,12 @@
       {{{yield}}}
     </section>
 
+  </section>
+
+  <section id="uploads" class="row">
+    <section id="current"></section>
+
+    <div id="progressbar"></div>
   </section>
 
 </body>
