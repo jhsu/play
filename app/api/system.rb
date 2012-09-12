@@ -8,6 +8,17 @@ module Play
     get "/stream_url" do
       {:stream_url => Play.config.stream_url}.to_json
     end
+
+    post "/upload" do
+      params[:files].each do |file|
+        tmpfile = file[:tempfile]
+        name    = file[:filename].chomp.delete("\000")
+        file_with_name = File.join(Play::Player.music_directory, name)
+        system "mv", tmpfile.path, file_with_name
+        Play::Player.update
+      end
+      "{}"
+    end
   end
 end
 

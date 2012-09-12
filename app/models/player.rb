@@ -64,5 +64,17 @@ module Play
       }
     end
 
+    def self.music_directory
+      return @music_directory if @music_directory
+      @music_directory ||= File.read(
+        File.expand_path(File.join(File.dirname(__FILE__), "../../config/mpd.conf"))
+      ).match(/^music_directory\s+(.*)$/)[1].gsub(/(^"|')|("|'$)/, '')
+      @music_directory += "/" unless @music_directory =~ /\/$/
+    end
+
+    def self.update
+      app.update
+    end
+
   end
 end
