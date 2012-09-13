@@ -10,23 +10,23 @@ module Play
       end
     end
 
-    post '/pause' do
-      params.inspect
-    end
-
     put "/play" do
+      # pusher
       Player.play
     end
 
     put "/pause" do
+      # pusher
       Player.pause
     end
 
     put "/next" do
+      # pusher
       SongDecorator.new(Player.play_next).to_json
     end
 
     put "/previous" do
+      # pusher
       SongDecorator.new(Player.play_previous).to_json
     end
 

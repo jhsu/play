@@ -9,9 +9,8 @@ Play::Player.app.repeat = false if Play::Player.app.repeat?
 # Push changes to now playing and queue to client
 def push(now_playing, songs)
   packet = { :now_playing => SongDecorator.new(now_playing),
-    :songs => SongDecorator.decorate(songs)}.to_json
-  Pusher['now_playing_updates'].trigger('update_now_playing', packet)
-rescue Pusher::ConfigurationError
+    :songs => SongDecorator.decorate(songs)}
+  Play::Notification.push(packet)
 end
 
 loop do

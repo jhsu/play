@@ -8,6 +8,11 @@ module Play
     post "/queue" do
       if params[:path] && song = Song.new("file" => params[:path])
         if Queue.add_song(song)
+          packet = {
+            :now_playing => SongDecorator.new(Player.now_playing),
+            :songs => SongDecorator.decorate(Queue.songs)}
+          Notification.push(packet)
+
           status 200
         else
           status 404
@@ -22,6 +27,11 @@ module Play
     delete "/queue" do
       if params[:id] && song = Song.new("id" => params[:id])
         if Queue.remove_song(song)
+          packet = {
+            :now_playing => SongDecorator.new(Player.now_playing),
+            :songs => SongDecorator.decorate(Queue.songs)}
+          Notification.push(packet)
+
           status 200
         else
           status 404
