@@ -7,6 +7,16 @@ class SongDecorator
     @model = song
   end
 
+  # Decorate single and collection
+  def self.decorate(resource)
+    if resource.is_a?(Array)
+      resource.map {|r| new(r) }
+    else
+      new(resource)
+    end
+  end
+
+
   def as_json(options={})
     {
       :id => model.id,

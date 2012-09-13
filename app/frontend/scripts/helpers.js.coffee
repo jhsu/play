@@ -11,8 +11,8 @@ window.renderNowPlaying = ->
     url: '/now_playing',
     dataType: 'json',
     success: (response) ->
-      songView = new Play.Views.SongView(response)
-      songView.render()
+      view = new Play.Views.NowPlayingView(response)
+      view.render()
 
 window.renderControls = ->
   $.ajax

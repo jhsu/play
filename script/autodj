@@ -6,23 +6,35 @@ require File.join(File.dirname(__FILE__), '../app/boot')
 # ensure repeat all is off
 Play::Player.app.repeat = false if Play::Player.app.repeat?
 
-# # Checks
-# [TODO]: push changes to clients
-loop do
-  songs = Play::Queue.songs
-  if current_song = Play::Player.now_playing
+# Push changes to now playing and queue to client
+def push(now_playing, songs)
+  packet = { :now_playing => SongDecorator.new(now_playing),
+    :songs => SongDecorator.decorate(songs)}.to_json
+  Pusher['now_playing_updates'].trigger('update_now_playing', packet)
+rescue Pusher::ConfigurationError
+end
 
-    # ensure always atleast 1 song queued
+loop do
+  @songs = Play::Queue.songs
+  if current_song = Play::Player.now_playing
+    # ensure always atleast one song queued
     unless current_song.pos == "0"
       current_song.pos.to_i.times do
         Play::Queue.remove_song_by_pos(0)
       end
     end
 
-    # ensure already played songs are cleared
-    if current_song.pos == Play::Queue.songs.last.pos
+    # ensure atleast one pending song
+    if Play::Queue.songs.last.pos == "0"
       Play::Queue.add_song(Play::Song.new(Play::Player.app.songs.sample))
+      sleep 1 until Play::Queue.songs.size > 1
     end
+
+    if @last && @last.id != current_song.id
+      @songs = Play::Queue.songs
+      push(current_song, @songs)
+    end
+    @last = current_song
   end
 
   sleep 5

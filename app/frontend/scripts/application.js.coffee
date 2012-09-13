@@ -8,6 +8,7 @@
 
 //= require behaviors
 //= require upload
+//= require realtime
 
 $(document).ready ->
   renderNowPlaying()

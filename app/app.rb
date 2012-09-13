@@ -25,6 +25,9 @@ module Play
     #                  }
 
     # Pusher
+    Pusher.app_id =  Play.config.pusher_app_id
+    Pusher.key = Play.config.pusher_key
+    Pusher.secret = Play.config.pusher_secret
 
     set :public_folder, "#{dir}/frontend/public"
     set :static, true

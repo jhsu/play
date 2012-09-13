@@ -1,0 +1,8 @@
+pusher = new Pusher('<%= Play.config.pusher_key %>')
+channel = pusher.subscribe('now_playing_updates')
+
+channel.bind 'update_now_playing', (message) ->
+  nowPlayingView = new Play.Views.NowPlayingView(message.now_playing)
+  queueView = new Play.Views.SongListView(message.songs)
+  nowPlayingView.render()
+  queueView.render()

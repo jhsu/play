@@ -1,5 +1,5 @@
 class Play.Views.SongView
-  el: "#now-playing"
+  el: "div"
   template: "song"
 
   constructor: (json) ->
@@ -18,6 +18,9 @@ class Play.Views.SongView
       ""
     $(this.el).html(rendered)
 
+class Play.Views.NowPlayingView extends Play.Views.SongView
+  el: "#now-playing"
+  template: "now_playing"
 
 class Play.Views.SongListView
   el: "#songs"

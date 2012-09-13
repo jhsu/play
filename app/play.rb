@@ -7,7 +7,10 @@ module Play
       :stream_url    => yaml['stream_url'],
       :auth_token    => yaml['auth_token'],
       :mpd_host      => yaml['mpd_host'],
-      :mpd_port      => yaml['mpd_port']
+      :mpd_port      => yaml['mpd_port'],
+      :pusher_app_id => yaml['pusher_app_id'],
+      :pusher_key    => yaml['pusher_key'],
+      :pusher_secret => yaml['pusher_secret']
   end
 
 private
