@@ -9,20 +9,35 @@ require 'api/system'
 module Play
   class App < Sinatra::Base
     enable :sessions
-    # set    :session_secret, Play.config.auth_token
+    set    :session_secret, Play.config.auth_token
+
+    # enable :logging
 
     register Mustache::Sinatra
-    # register Sinatra::Auth::Github
+    register Sinatra::Auth::Github
 
     dir = File.dirname(File.expand_path(__FILE__))
 
-    # set :github_options, {
-    #                     :secret    => Play.config.secret,
-    #                     :client_id => Play.config.client_id,
-    #                     :failure_app => Octobouncer,
-    #                     :organization => Play.config.gh_org,
-    #                     :github_scopes => 'user,offline_access'
-    #                  }
+
+    class Bouncer < Sinatra::Base
+      # Handle bad authenication, clears the session and redirects to login.
+      get '/unauthenticated' do
+        if session[:user].nil?
+          redirect '/'
+        else
+          session.clear
+          redirect '/403.html'
+        end
+      end
+    end
+
+    set :github_options, {
+      :secret    => Play.config.secret,
+      :client_id => Play.config.client_id,
+      :failure_app => Bouncer,
+      :organization => Play.config.gh_org,
+      :github_scopes => 'user,offline_access'
+    }
 
     # Pusher
     Pusher.app_id =  Play.config.pusher_app_id
@@ -46,11 +61,11 @@ module Play
                              request.path_info =~ /\/images\/art\/.*.png/
 
 
-      # if session_not_required || @current_user
+      if session_not_required || @current_user
         session_not_required || true
-      # else
-      #   login
-      # end
+      else
+        login
+      end
     end
 
     def api_request
@@ -58,9 +73,18 @@ module Play
     end
 
     def login
-      # halt 401 if !user
+      if Play.config.gh_org && Play.config.gh_org != ''
+        github_organization_authenticate!(Play.config.gh_org)
+      else
+        authenticate!
+      end
 
-      # @current_user = session[:user] = user
+      user   = User.find(github_user.login)
+      user ||= User.create(github_user.login, github_user.email)
+
+      halt 401 if !user
+
+      @current_user = session[:user] = user
     end
 
     def current_user
@@ -72,10 +96,11 @@ module Play
       mustache :index
     end
 
-    # get "/logout" do
-    #   content_type :html
-    #   logout!
-    # end
+    get "/logout" do
+      content_type :html
+      logout!
+      redirect 'https://github.com'
+    end
 
     # get "/token" do
     #   @back_to = params[:redirect_to]

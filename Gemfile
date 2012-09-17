@@ -8,6 +8,7 @@ gem 'mustache', '~> 0.99.4'
 gem 'pusher'
 gem 'sass', '~>3.2'
 gem 'sinatra', '~> 1.3.3'
+gem 'sinatra_auth_github', '~> 0.10.0'
 gem 'sprockets', '~> 2.5.0'
 gem 'thin'
 
